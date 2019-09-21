@@ -1,0 +1,42 @@
+plugins {
+    id 'org.jetbrains.intellij' version '0.4.10'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.50'
+}
+
+group 'angcyo.wayto'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    //version '2019.2.2'
+//    version = '2019.1.4'
+    //version = '2018.3.4'
+    localPath = "D:\\JetBrains\\IntelliJ IDEA 2019.2.2"
+//    localPath = "D:\\JetBrains\\IntelliJ IDEA 2019.1.4"
+    downloadSources false
+    updateSinceUntilBuild false
+    sameSinceUntilBuild false
+    plugins = ['android', 'gradle', 'kotlin', 'java']
+}
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+patchPluginXml {
+    changeNotes """
+      第一版 2019-9-21"""
+}

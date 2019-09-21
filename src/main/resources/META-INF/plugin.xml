@@ -1,0 +1,37 @@
+<idea-plugin>
+    <id>angcyo.wayto.CreateWaytoProject</id>
+    <name>.CreateWaytoProject</name>
+    <vendor email="angcyo@126.com" url="https://www.angcyo.com">angcyo</vendor>
+
+    <description><![CDATA[
+      伟图科技, 创建工程脚手架.<br>
+      <em>2019-9-21</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <depends>org.jetbrains.plugins.gradle</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>org.jetbrains.android</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="angcyo.wayto.action.create.project"
+                class="com.angcyo.wayto.action.CreateProjectAction"
+                text="Start a new Wayto project"
+                icon="/icons/create.png"
+                description="Wayto工程创建">
+            <add-to-group group-id="WelcomeScreen.QuickStart.IDEA" anchor="after"
+                          relative-to-action="WelcomeScreen.CreateNewProject"/>
+        </action>
+    </actions>
+</idea-plugin>
