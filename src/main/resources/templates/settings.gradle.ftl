@@ -1,0 +1,1 @@
+apply from: './wayto.core/lib/include_all.gradle'

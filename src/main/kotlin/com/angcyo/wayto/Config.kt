@@ -1,5 +1,7 @@
 package com.angcyo.wayto
 
+import java.io.File
+
 /**
  *
  * Email:angcyo@126.com
@@ -39,3 +41,12 @@ public fun Config.save() {
     "corePath".putValue(corePath)
     "pluginPath".putValue(pluginPath)
 }
+
+public fun Config.projectPath(): String = "${savePath}${File.separator}${projectName}"
+public fun Config.modulePath(): String = "${projectPath()}${File.separator}${moduleName}"
+public fun Config.corePath(): String = "${projectPath()}${File.separator}wayto.core"
+public fun Config.pluginPath(): String = "${projectPath()}${File.separator}wayto.plugin"
+
+public fun Config.packagePath(): String = modulePath() + "/src/main/java/" + packageName.toPath()
+public fun Config.resPath(): String = modulePath() + "/src/main/res/"
+

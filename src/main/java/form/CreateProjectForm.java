@@ -7,6 +7,7 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.ui.ValidationInfo;
 
 import javax.swing.*;
+import java.io.File;
 
 /**
  * Email:angcyo@126.com
@@ -97,6 +98,12 @@ public class CreateProjectForm {
 //                savePathFile.mkdirs();
 //                //return new ValidationInfo("保存路径不存在", selectorLocalPathButton);
 //            }
+        }
+        if (!config.getCorePath().isEmpty() && !new File(config.getCorePath()).exists()) {
+            return new ValidationInfo("Core 项目不存在", selectorCorePathButton);
+        }
+        if (!config.getPluginPath().isEmpty() && !new File(config.getPluginPath()).exists()) {
+            return new ValidationInfo("Plugin 项目不存在", selectorPluginPathButton);
         }
         return null;
     }

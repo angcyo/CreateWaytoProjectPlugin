@@ -26,3 +26,5 @@ public fun String.putValue(value: String) {
 public fun String.message(title: String = "注意") {
     Messages.showMessageDialog(this, title, Messages.getInformationIcon())
 }
+
+public fun String.toPath(): String = this.replace(".", "/")
