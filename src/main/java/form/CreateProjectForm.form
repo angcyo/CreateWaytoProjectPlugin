@@ -195,7 +195,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text value="wayto.core 本地路径(选填)"/>
+                  <text value="wayto.core 本地路径"/>
                 </properties>
               </component>
               <grid id="a7c03" binding="selectorCorePathPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
@@ -216,7 +216,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text value="wayto.plugin 本地路径(选填)"/>
+                  <text value="wayto.plugin 本地路径"/>
                 </properties>
               </component>
               <grid id="2d8ec" binding="selectorPluginPathPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
@@ -254,7 +254,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text value="Gitee 账户名(选填)"/>
+                  <text value="Gitee 账户名"/>
                 </properties>
               </component>
               <component id="863dc" class="javax.swing.JTextField" binding="giteeUserNameEdit">
@@ -272,7 +272,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text value="Gitee 账户密码(选填)"/>
+                  <text value="Gitee 账户密码"/>
                 </properties>
               </component>
               <component id="f683f" class="javax.swing.JPasswordField" binding="giteePasswordEdit">
