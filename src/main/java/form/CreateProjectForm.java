@@ -36,6 +36,7 @@ public class CreateProjectForm {
     private JRadioButton localRadio;
     private JRadioButton giteeRadio;
     private JPanel cardPanel;
+    private JLabel appInfoLabel;
 
     private TextFieldWithBrowseButton selectorLocalPathButton;
     private TextFieldWithBrowseButton selectorCorePathButton;
@@ -83,6 +84,10 @@ public class CreateProjectForm {
         selectorLocalPathButton = BrowseFileHelper.INSTANCE.addBrowseButton(selectorLocalPathPanel, selectorLocalPathLabel);
         selectorCorePathButton = BrowseFileHelper.INSTANCE.addBrowseButton(selectorCorePathPanel, selectorCorePathLabel);
         selectorPluginPathButton = BrowseFileHelper.INSTANCE.addBrowseButton(selectorPluginPathPanel, selectorPluginPathLabel);
+    }
+
+    public void showAppInfo(String text) {
+        appInfoLabel.setText(text);
     }
 
     public Config readConfig() {
