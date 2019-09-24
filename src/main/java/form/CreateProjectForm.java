@@ -7,6 +7,9 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.ui.ValidationInfo;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 
 /**
@@ -28,6 +31,11 @@ public class CreateProjectForm {
     private JPanel selectorLocalPathPanel;
     private JPanel selectorCorePathPanel;
     private JPanel selectorPluginPathPanel;
+    private JTextField giteeUserNameEdit;
+    private JPasswordField giteePasswordEdit;
+    private JRadioButton localRadio;
+    private JRadioButton giteeRadio;
+    private JPanel cardPanel;
 
     private TextFieldWithBrowseButton selectorLocalPathButton;
     private TextFieldWithBrowseButton selectorCorePathButton;
@@ -50,6 +58,24 @@ public class CreateProjectForm {
         selectorLocalPathButton.setText(config.getSavePath());
         selectorCorePathButton.setText(config.getCorePath());
         selectorPluginPathButton.setText(config.getPluginPath());
+
+        giteeUserNameEdit.setText(config.getUserName());
+        giteePasswordEdit.setText(config.getUserPassword());
+
+        localRadio.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                CardLayout layout = (CardLayout) cardPanel.getLayout();
+                if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
+                    layout.show(cardPanel, "CardLocal");
+                } else {
+                    layout.show(cardPanel, "CardGitee");
+                }
+            }
+        });
+
+        localRadio.setSelected(config.getCorePluginFrom().equals("1"));
+        giteeRadio.setSelected(config.getCorePluginFrom().equals("2"));
     }
 
     public void addBrowseButton() {
@@ -71,6 +97,15 @@ public class CreateProjectForm {
         config.setCorePath(selectorCorePathButton.getText());
         config.setPluginPath(selectorPluginPathButton.getText());
 
+        config.setCorePath(selectorCorePathButton.getText());
+        config.setUserName(giteeUserNameEdit.getText());
+        config.setUserPassword(String.valueOf(giteePasswordEdit.getPassword()));
+
+        if (localRadio.isSelected()) {
+            config.setCorePluginFrom("1");
+        } else {
+            config.setCorePluginFrom("2");
+        }
         return config;
     }
 
@@ -99,11 +134,23 @@ public class CreateProjectForm {
 //                //return new ValidationInfo("保存路径不存在", selectorLocalPathButton);
 //            }
         }
-        if (!config.getCorePath().isEmpty() && !new File(config.getCorePath()).exists()) {
-            return new ValidationInfo("Core 项目不存在", selectorCorePathButton);
-        }
-        if (!config.getPluginPath().isEmpty() && !new File(config.getPluginPath()).exists()) {
-            return new ValidationInfo("Plugin 项目不存在", selectorPluginPathButton);
+
+        if (ConfigKt.isCorePluginFromLocal(config)) {
+            if (config.getCorePath().isEmpty() || !new File(config.getCorePath()).exists()) {
+                return new ValidationInfo("Core 项目不存在", selectorCorePathButton);
+            }
+
+            if (config.getPluginPath().isEmpty() || !new File(config.getPluginPath()).exists()) {
+                return new ValidationInfo("Plugin 项目不存在", selectorPluginPathButton);
+            }
+        } else {
+            if (config.getUserName().isEmpty()) {
+                return new ValidationInfo("请输入Gitee用户名", giteeUserNameEdit);
+            }
+
+            if (config.getUserPassword().isEmpty()) {
+                return new ValidationInfo("请输入Gitee用户名密码", giteePasswordEdit);
+            }
         }
         return null;
     }

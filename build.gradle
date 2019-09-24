@@ -13,6 +13,7 @@ repositories {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation "org.freemarker:freemarker:2.3.29"
+    //implementation "org.eclipse.jgit:org.eclipse.jgit:5.5.0.201909110433-r"
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

@@ -46,11 +46,15 @@ object CreateProjectHelper {
             File(config.corePath).apply {
                 if (exists() && isDirectory && canRead()) {
                     copyRecursively(File(config.corePath()), true)
+                } else {
+                    GitHelper.configCore(config)
                 }
             }
             File(config.pluginPath).apply {
                 if (exists() && isDirectory && canRead()) {
                     copyRecursively(File(config.pluginPath()), true)
+                } else {
+                    GitHelper.configPlugin(config)
                 }
             }
 

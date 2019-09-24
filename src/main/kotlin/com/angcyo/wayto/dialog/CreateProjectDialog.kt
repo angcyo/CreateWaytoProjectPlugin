@@ -50,6 +50,7 @@ class CreateProjectDialog : DialogWrapper(null, true) {
         var result = true
         form.readConfig().run {
             save()
+
             result = CreateProjectHelper.createProject(this) {
                 progressWindow.stop()
                 if (result) {

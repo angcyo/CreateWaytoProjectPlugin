@@ -18,6 +18,11 @@ class Config {
     var savePath: String = ""
     var corePath: String = ""
     var pluginPath: String = ""
+
+    var userName: String = ""
+    var userPassword: String = ""
+
+    var corePluginFrom: String = "1" //1 local, 2 gitee
 }
 
 public fun defaultConfig(): Config {
@@ -29,6 +34,9 @@ public fun defaultConfig(): Config {
         savePath = "savePath".getValue("E:\\Project")
         corePath = "corePath".getValue("E:\\Project\\$projectName\\wayto.core")
         pluginPath = "pluginPath".getValue("E:\\Project\\$projectName\\wayto.plugin")
+        userName = "userName".getValue()
+        userPassword = "userPassword".getValue()
+        corePluginFrom = "corePluginFrom".getValue()
     }
 }
 
@@ -40,6 +48,9 @@ public fun Config.save() {
     "savePath".putValue(savePath)
     "corePath".putValue(corePath)
     "pluginPath".putValue(pluginPath)
+    "userName".putValue(userName)
+    "userPassword".putValue(userPassword)
+    "corePluginFrom".putValue(corePluginFrom)
 }
 
 public fun Config.projectPath(): String = "${savePath}${File.separator}${projectName}"
@@ -49,4 +60,6 @@ public fun Config.pluginPath(): String = "${projectPath()}${File.separator}wayto
 
 public fun Config.packagePath(): String = modulePath() + "/src/main/java/" + packageName.toPath()
 public fun Config.resPath(): String = modulePath() + "/src/main/res/"
+
+public fun Config.isCorePluginFromLocal(): Boolean = corePluginFrom == "1"
 

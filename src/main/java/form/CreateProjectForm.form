@@ -23,18 +23,12 @@
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:22px:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="top:16dlu:noGrow"/>
+    <rowspec value="center:37px:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:4dlu:noGrow"/>
     <colspec value="fill:500px:grow"/>
     <constraints>
-      <xy x="20" y="20" width="614" height="486"/>
+      <xy x="20" y="20" width="587" height="650"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -124,24 +118,6 @@
           <text value="选择保存路径(...)"/>
         </properties>
       </component>
-      <component id="81fb5" class="javax.swing.JLabel" binding="selectorCorePathLabel">
-        <constraints>
-          <grid row="23" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <text value="wayto.core 本地路径(选填)"/>
-        </properties>
-      </component>
-      <component id="edc61" class="javax.swing.JLabel" binding="selectorPluginPathLabel">
-        <constraints>
-          <grid row="27" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <text value="wayto.plugin 本地路径(选填)"/>
-        </properties>
-      </component>
       <grid id="3ced" binding="selectorLocalPathPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints>
           <grid row="21" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -154,30 +130,168 @@
         <border type="none"/>
         <children/>
       </grid>
-      <grid id="a7c03" binding="selectorCorePathPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+      <grid id="bd6d7" layout-manager="FlowLayout" hgap="10" vgap="5" flow-align="1">
         <constraints>
-          <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="23" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
-          <minimumSize width="24" height="30"/>
-          <preferredSize width="24" height="30"/>
+          <minimumSize width="10" height="30"/>
+          <preferredSize width="10" height="30"/>
         </properties>
         <border type="none"/>
-        <children/>
+        <children>
+          <component id="765cd" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="core/plugin 库配置: "/>
+            </properties>
+          </component>
+          <component id="199c5" class="javax.swing.JRadioButton" binding="localRadio">
+            <constraints/>
+            <properties>
+              <margin top="2" left="10" bottom="2" right="10"/>
+              <selected value="true"/>
+              <text value="从本地路径复制"/>
+            </properties>
+          </component>
+          <component id="c616b" class="javax.swing.JRadioButton" binding="giteeRadio">
+            <constraints/>
+            <properties>
+              <margin top="2" left="10" bottom="2" right="10"/>
+              <text value="从gitee克隆"/>
+            </properties>
+          </component>
+        </children>
       </grid>
-      <grid id="2d8ec" binding="selectorPluginPathPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+      <grid id="f5d8a" binding="cardPanel" layout-manager="CardLayout" hgap="0" vgap="0">
         <constraints>
-          <grid row="29" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <forms/>
+          <grid row="24" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-vert="false"/>
         </constraints>
-        <properties>
-          <minimumSize width="24" height="30"/>
-          <preferredSize width="24" height="30"/>
-        </properties>
+        <properties/>
         <border type="none"/>
-        <children/>
+        <children>
+          <grid id="16dec" layout-manager="FormLayout">
+            <rowspec value="center:d:noGrow"/>
+            <rowspec value="top:4dlu:noGrow"/>
+            <rowspec value="center:max(d;4px):noGrow"/>
+            <rowspec value="top:4dlu:noGrow"/>
+            <rowspec value="center:max(d;4px):noGrow"/>
+            <rowspec value="top:4dlu:noGrow"/>
+            <rowspec value="center:max(d;4px):noGrow"/>
+            <colspec value="fill:d:grow"/>
+            <constraints>
+              <card name="CardLocal"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="81fb5" class="javax.swing.JLabel" binding="selectorCorePathLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text value="wayto.core 本地路径(选填)"/>
+                </properties>
+              </component>
+              <grid id="a7c03" binding="selectorCorePathPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <minimumSize width="24" height="30"/>
+                  <preferredSize width="24" height="30"/>
+                </properties>
+                <border type="none"/>
+                <children/>
+              </grid>
+              <component id="edc61" class="javax.swing.JLabel" binding="selectorPluginPathLabel">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text value="wayto.plugin 本地路径(选填)"/>
+                </properties>
+              </component>
+              <grid id="2d8ec" binding="selectorPluginPathPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <minimumSize width="24" height="30"/>
+                  <preferredSize width="24" height="30"/>
+                </properties>
+                <border type="none"/>
+                <children/>
+              </grid>
+            </children>
+          </grid>
+          <grid id="874b1" layout-manager="FormLayout">
+            <rowspec value="center:d:noGrow"/>
+            <rowspec value="top:4dlu:noGrow"/>
+            <rowspec value="center:max(d;4px):noGrow"/>
+            <rowspec value="top:4dlu:noGrow"/>
+            <rowspec value="center:max(d;4px):noGrow"/>
+            <rowspec value="top:4dlu:noGrow"/>
+            <rowspec value="center:max(d;4px):noGrow"/>
+            <colspec value="fill:d:grow"/>
+            <constraints>
+              <card name="CardGitee"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="c4dda" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text value="Gitee 账户名(选填)"/>
+                </properties>
+              </component>
+              <component id="863dc" class="javax.swing.JTextField" binding="giteeUserNameEdit">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                  <forms defaultalign-horz="false"/>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="da02f" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text value="Gitee 账户密码(选填)"/>
+                </properties>
+              </component>
+              <component id="f683f" class="javax.swing.JPasswordField" binding="giteePasswordEdit">
+                <constraints>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                  <forms defaultalign-horz="false"/>
+                </constraints>
+                <properties/>
+              </component>
+            </children>
+          </grid>
+        </children>
       </grid>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="corePluginGroup">
+      <member id="c616b"/>
+      <member id="199c5"/>
+    </group>
+  </buttonGroups>
 </form>
