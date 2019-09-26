@@ -14,7 +14,9 @@ org.gradle.jvmargs=-Xmx2048M -Dkotlin.daemon.jvm.options\="-Xmx2048M"
 # Kotlin code style for this project: "official" or "obsolete":
 kotlin.code.style=official
 
-android.enableR8 = true
+org.gradle.parallel=true
+android.enableR8=false
+android.enableD8=true
 
 key_file=key_file.properties
 
@@ -29,11 +31,11 @@ T_SDK=28
 S_VER=28.0.0
 
 # 开启混淆
-minify_enabled = true
-minify_enabled_debug = false
+minify_enabled=true
+minify_enabled_debug=false
 
 #android.useAndroidX=false
 #android.enableJetifier=false
 #android.enableR8=false
 
-objectboxVersion = 2.3.4
+objectboxVersion=2.3.4
