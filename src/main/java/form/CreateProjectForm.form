@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="form.CreateProjectForm">
   <grid id="27dc6" binding="rootFormPanel" layout-manager="FormLayout">
-    <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:13dlu:noGrow"/>
+    <rowspec value="center:d:noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:d:noGrow"/>
     <rowspec value="center:31px:noGrow"/>
     <rowspec value="top:d:noGrow"/>
@@ -25,6 +25,8 @@
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:22px:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
     <rowspec value="top:16dlu:noGrow"/>
     <rowspec value="center:37px:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
@@ -42,6 +44,7 @@
         </constraints>
         <properties>
           <text value="工程名(Wayto.Reservoir.Mobile)"/>
+          <toolTipText value="Project的名字"/>
         </properties>
       </component>
       <component id="bbdc7" class="javax.swing.JTextField" binding="projectNameEdit">
@@ -60,6 +63,7 @@
         </constraints>
         <properties>
           <text value="项目包名(com.wayto.reservoir.patrol.plugin)"/>
+          <toolTipText value="APK的包名"/>
         </properties>
       </component>
       <component id="4d84c" class="javax.swing.JTextField" binding="packageNameEdit">
@@ -78,6 +82,7 @@
         </constraints>
         <properties>
           <text value="模块名(Reservoir)"/>
+          <toolTipText value="App Module的名字"/>
         </properties>
       </component>
       <component id="ce91" class="javax.swing.JTextField" binding="moduleNameEdit">
@@ -118,6 +123,7 @@
         </constraints>
         <properties>
           <text value="选择保存路径(...)"/>
+          <toolTipText value="需要存储在本地的什么位置, 可以覆盖."/>
         </properties>
       </component>
       <grid id="3ced" binding="selectorLocalPathPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
@@ -134,7 +140,7 @@
       </grid>
       <grid id="bd6d7" layout-manager="FlowLayout" hgap="10" vgap="5" flow-align="1">
         <constraints>
-          <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="27" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
@@ -168,7 +174,7 @@
       </grid>
       <grid id="f5d8a" binding="cardPanel" layout-manager="CardLayout" hgap="0" vgap="0">
         <constraints>
-          <grid row="26" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="28" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms defaultalign-vert="false"/>
         </constraints>
         <properties/>
@@ -284,15 +290,50 @@
           </grid>
         </children>
       </grid>
-      <component id="588d5" class="javax.swing.JLabel" binding="appInfoLabel">
+      <component id="d5cfc" class="javax.swing.JTextPane" binding="tempTextPane">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <forms/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
         </constraints>
         <properties>
           <text value=""/>
+          <toolTipText value="基础信息展示和临时文件存在路径"/>
         </properties>
       </component>
+      <grid id="90a01" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints>
+          <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="e14aa" class="javax.swing.JCheckBox" binding="overrideBox">
+            <constraints/>
+            <properties>
+              <selected value="true"/>
+              <text value="覆盖本地路径"/>
+              <toolTipText value="如果本地工程路径已存在, 则先清空, 后创建"/>
+            </properties>
+          </component>
+          <hspacer id="8d3a2">
+            <constraints/>
+          </hspacer>
+          <hspacer id="33c65">
+            <constraints/>
+          </hspacer>
+          <component id="820be" class="javax.swing.JCheckBox" binding="onlineTemplatesBox">
+            <constraints/>
+            <properties>
+              <selected value="true"/>
+              <text value="使用在线模版文件"/>
+              <toolTipText value="使用Github上的ftl模板文件"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
   <buttonGroups>

@@ -2,6 +2,7 @@ package com.angcyo.wayto
 
 import org.gradle.internal.impldep.org.eclipse.jgit.api.Git
 import org.gradle.internal.impldep.org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
+import org.gradle.internal.impldep.org.eclipse.jgit.util.FileUtils
 import java.io.File
 
 /**
@@ -19,7 +20,7 @@ object GitHelper {
             setCredentialsProvider(
                 UsernamePasswordCredentialsProvider(config.userName, config.userPassword)
             )
-            call()
+            call().close()
         }
     }
 
@@ -30,7 +31,18 @@ object GitHelper {
             setCredentialsProvider(
                 UsernamePasswordCredentialsProvider(config.userName, config.userPassword)
             )
-            call()
+            call().close()
+        }
+    }
+
+    /**下载现在模板*/
+    fun downloadTemplates(toPath: String) {
+        val targetPathFile = File(toPath)
+        FileUtils.delete(targetPathFile, 13)
+        Git.cloneRepository().apply {
+            setURI("https://github.com/WaytoIns/WaytoProjectTemplates.git")
+            setDirectory(targetPathFile)
+            call().close()
         }
     }
 }

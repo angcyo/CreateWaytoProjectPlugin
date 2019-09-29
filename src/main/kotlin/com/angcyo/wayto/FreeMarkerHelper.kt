@@ -25,6 +25,23 @@ object FreeMarkerHelper {
             freemarkerConfig = Configuration()
             freemarkerConfig.incompatibleImprovements = Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS
 
+            freemarkerConfig.numberFormat = "#"
+            freemarkerConfig.isClassicCompatible = true
+            freemarkerConfig.defaultEncoding = "UTF-8"
+            freemarkerConfig.locale = Locale.CHINA
+            freemarkerConfig.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
+        } catch (e: Exception) {
+            L.error(e.message, e)
+        }
+    }
+
+    fun initTemplatePath(config: Config): String {
+        if (config.onlineTemplates == "1") {
+            //使用在线模版
+            val tempPath = PathManager.getTempPath() + File.separator + "CreateWaytoProject/OnlineTemplate"
+            GitHelper.downloadTemplates(tempPath)
+            templatePath = tempPath
+        } else {
             val jarUrl = this.javaClass.classLoader.getResource("META-INF/plugin.xml")
             //jar
             templatePath = if (jarUrl?.protocol == "file") {
@@ -43,15 +60,9 @@ object FreeMarkerHelper {
                 }
                 tempPath
             }
-            freemarkerConfig.setDirectoryForTemplateLoading(File(templatePath, ROOT_PATH))
-            freemarkerConfig.numberFormat = "#"
-            freemarkerConfig.isClassicCompatible = true
-            freemarkerConfig.defaultEncoding = "UTF-8"
-            freemarkerConfig.locale = Locale.CHINA
-            freemarkerConfig.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
-        } catch (e: Exception) {
-            L.error(e.message, e)
         }
+        freemarkerConfig.setDirectoryForTemplateLoading(File(templatePath, ROOT_PATH))
+        return templatePath
     }
 
     fun parse(templateName: String, outPath: String, params: Map<String, Any>? = null) {

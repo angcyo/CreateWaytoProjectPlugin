@@ -1,9 +1,11 @@
 package com.angcyo.wayto
 
+import com.intellij.openapi.progress.util.ProgressWindow
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.wm.IdeFocusManager
 import com.intellij.platform.PlatformProjectOpenProcessor
+import org.gradle.internal.impldep.org.eclipse.jgit.util.FileUtils
 import java.io.File
 import java.util.*
 import javax.swing.SwingUtilities
@@ -16,18 +18,21 @@ import javax.swing.SwingUtilities
  * Copyright (c) 2019 ShenZhen O&M Cloud Co., Ltd. All rights reserved.
  */
 object CreateProjectHelper {
-    fun createProject(config: Config, onEnd: () -> Unit): Boolean {
+    fun createProject(config: Config, progressWindow: ProgressWindow, onEnd: () -> Unit): Boolean {
         val projectFile = File(config.savePath, config.projectName)
 
         if (projectFile.exists()) {
-            if (projectFile.isFile || projectFile.list()?.isNotEmpty() == true) {
+            if (config.isOverridePath()) {
+                doFirst(config, progressWindow, onEnd)
+                return true
+            } else if (projectFile.isFile || projectFile.list()?.isNotEmpty() == true) {
                 "目录非空: ${projectFile.absolutePath}".message()
             } else {
-                doFirst(config, onEnd)
+                doFirst(config, progressWindow, onEnd)
                 return true
             }
         } else if (projectFile.mkdirs()) {
-            doFirst(config, onEnd)
+            doFirst(config, progressWindow, onEnd)
             return true
         } else {
             "无法创建目录: ${projectFile.absolutePath}".message()
@@ -35,37 +40,61 @@ object CreateProjectHelper {
         return false
     }
 
-    fun doFirst(config: Config, onEnd: () -> Unit) {
+    fun doFirst(config: Config, progressWindow: ProgressWindow, onEnd: () -> Unit) {
         Thread {
-            mkdirs(config)
 
-            //模版文件写入
-            FreeMarkerHelper.doConfig(config)
-
-            //复制 core plugin 文件夹
-            File(config.corePath).apply {
-                if (exists() && isDirectory && canRead()) {
-                    copyRecursively(File(config.corePath()), true)
-                } else {
-                    GitHelper.configCore(config)
+            try {
+                if (config.isOverridePath()) {
+                    //先清空
+                    val projectFile = File(config.savePath, config.projectName)
+                    FileUtils.delete(projectFile, 13)
                 }
-            }
-            File(config.pluginPath).apply {
-                if (exists() && isDirectory && canRead()) {
-                    copyRecursively(File(config.pluginPath()), true)
+
+                mkdirs(config)
+
+                //初始化模版
+                FreeMarkerHelper.initTemplatePath(config)
+
+                //模版文件写入
+                FreeMarkerHelper.doConfig(config)
+
+                //core plugin 库处理
+                if (config.isCorePluginFromLocal()) {
+                    //复制 core plugin 文件夹
+                    File(config.corePath).apply {
+                        if (exists() && isDirectory && canRead()) {
+                            copyRecursively(File(config.corePath()), true)
+                        } else {
+                            GitHelper.configCore(config)
+                        }
+                    }
+                    File(config.pluginPath).apply {
+                        if (exists() && isDirectory && canRead()) {
+                            copyRecursively(File(config.pluginPath()), true)
+                        } else {
+                            GitHelper.configPlugin(config)
+                        }
+                    }
                 } else {
+                    //在线拉取
+                    GitHelper.configCore(config)
                     GitHelper.configPlugin(config)
                 }
+
+                SwingUtilities.invokeLater {
+                    onEnd()
+
+                    //打开工程
+                    val projectFile = File(config.savePath, config.projectName)
+                    openProject(projectFile.absolutePath)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                SwingUtilities.invokeLater {
+                    progressWindow.stop()
+                    e.message?.message("创建异常!")
+                }
             }
-
-            SwingUtilities.invokeLater {
-                onEnd()
-
-                //打开工程
-                val projectFile = File(config.savePath, config.projectName)
-                openProject(projectFile.absolutePath)
-            }
-
         }.start()
     }
 

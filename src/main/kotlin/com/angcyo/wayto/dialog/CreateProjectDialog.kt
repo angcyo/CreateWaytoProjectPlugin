@@ -3,6 +3,7 @@ package com.angcyo.wayto.dialog
 import com.angcyo.wayto.CreateProjectHelper
 import com.angcyo.wayto.save
 import com.intellij.openapi.application.ApplicationInfo
+import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.progress.util.AbstractProgressIndicatorExBase
 import com.intellij.openapi.progress.util.ProgressWindow
 import com.intellij.openapi.ui.DialogWrapper
@@ -23,7 +24,7 @@ class CreateProjectDialog : DialogWrapper(null, true) {
 
     init {
         init()
-        title = "Wayto 创建工程配置页 V1.1.2"
+        title = "Wayto 创建工程配置页 V1.2.0"
     }
 
     override fun createCenterPanel(): JComponent? {
@@ -33,14 +34,11 @@ class CreateProjectDialog : DialogWrapper(null, true) {
             showAppInfo(buildString {
                 ApplicationInfo.getInstance().let {
                     appendln(it.versionName)
-                    append("|")
                     appendln(it.fullVersion)
-                    append("|")
                     appendln(it.apiVersion)
-                    append("|")
                     appendln(it.companyName)
-                    append("|")
                     appendln(it.shortCompanyName)
+                    append(PathManager.getTempPath())
                 }
             })
             rootFormPanel
@@ -65,7 +63,7 @@ class CreateProjectDialog : DialogWrapper(null, true) {
         form.readConfig().run {
             save()
 
-            result = CreateProjectHelper.createProject(this) {
+            result = CreateProjectHelper.createProject(this, progressWindow) {
                 progressWindow.stop()
                 if (result) {
                     super.doOKAction()

@@ -23,6 +23,8 @@ class Config {
     var userPassword: String = ""
 
     var corePluginFrom: String = "1" //1 local, 2 gitee
+    var onlineTemplates: String = "1" //1 true 是否使用在线模版
+    var overrideBox: String = "1" //1 true 先删除后创建
 }
 
 public fun defaultConfig(): Config {
@@ -36,7 +38,9 @@ public fun defaultConfig(): Config {
         pluginPath = "pluginPath".getValue("E:\\Project\\$projectName\\wayto.plugin")
         userName = "userName".getValue()
         userPassword = "userPassword".getValue()
-        corePluginFrom = "corePluginFrom".getValue()
+        corePluginFrom = "corePluginFrom".getValue("1")
+        onlineTemplates = "onlineTemplates".getValue("1")
+        overrideBox = "overrideBox".getValue("1")
     }
 }
 
@@ -51,6 +55,8 @@ public fun Config.save() {
     "userName".putValue(userName)
     "userPassword".putValue(userPassword)
     "corePluginFrom".putValue(corePluginFrom)
+    "onlineTemplates".putValue(onlineTemplates)
+    "overrideBox".putValue(overrideBox)
 }
 
 public fun Config.projectPath(): String = "${savePath}${File.separator}${projectName}"
@@ -62,4 +68,6 @@ public fun Config.packagePath(): String = modulePath() + "/src/main/java/" + pac
 public fun Config.resPath(): String = modulePath() + "/src/main/res/"
 
 public fun Config.isCorePluginFromLocal(): Boolean = corePluginFrom == "1"
+public fun Config.isUsedOnlineTemplates(): Boolean = onlineTemplates == "1"
+public fun Config.isOverridePath(): Boolean = overrideBox == "1"
 

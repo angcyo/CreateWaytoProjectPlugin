@@ -120,35 +120,54 @@ class App : PluginApplication() {
             override fun initBaseTitleLayout(titleFragment: BaseTitleFragment, arguments: Bundle?) {
                 super.initBaseTitleLayout(titleFragment, arguments)
 
+                titleFragment.viewResConfig.titleTextSize =
+                    getDimen(R.dimen.wt_title_text_size).toFloat()
+                titleFragment.viewResConfig.titleTextColor = getColor(R.color.wt_main_text_color)
+                titleFragment.viewResConfig.titleBarBackgroundColor = Color.WHITE
+
                 //标题栏 返回按钮
                 titleFragment.titleControl()
                     .selector(R.id.base_title_bar_layout)
-                    .setBackgroundColor(Color.WHITE)
+//                    .setBackground(
+//                        RDrawable.get(this@App)
+//                            .gradientType(GradientDrawable.LINEAR_GRADIENT)
+//                            .gradientColors(
+//                                SkinHelper.getSkin().themeColor,
+//                                SkinHelper.getSkin().themeDarkColor
+//                            )
+//                            .get()
+//                    )
+                    .setBackgroundColor(titleFragment.viewResConfig.titleBarBackgroundColor)
                     .selector(R.id.base_title_view)
                     .setTextBold(true)
-                    .setTextSize(getDimen(R.dimen.wt_title_text_size).toFloat())
-                    .setTextColor(getColor(R.color.wt_main_text_color))
+                    .setTextSize(titleFragment.viewResConfig.titleTextSize)
+                    .setTextColor(titleFragment.viewResConfig.titleTextColor)
 
-                //标题栏 横线
-                titleFragment.apply {
-                    showTitleLine(
-                        titleFragment.getColor(R.color.wt_line),
-                        titleFragment.getDimen(R.dimen.wt_line)
-                    )
-                    titleFragment.hideTitleShadow()
-                }
+                titleFragment.hideTitleShadow()
+
+//                //标题栏 横线
+//                titleFragment.showTitleLine(
+//                    titleFragment.getColor(R.color.wt_line),
+//                    titleFragment.getDimen(R.dimen.wt_line)
+//                )
                 //内容背景颜色
-                titleFragment.contentControl().selector()
-                    .setBackgroundColor(getColor(R.color.wt_dark_bg))
+                titleFragment.viewResConfig.fragmentBackgroundColor = getColor(R.color.wt_dark_bg2)
+                titleFragment.rootControl().selector()
+                    .setBackgroundColor(titleFragment.viewResConfig.fragmentBackgroundColor)
             }
 
             override fun createBackItem(titleFragment: BaseTitleFragment): View {
+                titleFragment.viewResConfig.titleItemTextColor =
+                    getColor(R.color.wt_main_text_color)
+                titleFragment.viewResConfig.titleItemIconColor =
+                    getColor(R.color.wt_main_text_color)
                 val backItem: ImageTextView = super.createBackItem(titleFragment) as ImageTextView
                 backItem.apply {
                     setImageResource(R.drawable.ic_app_back)
-                    imageTintList = ColorStateList.valueOf(getColor(R.color.wt_main_text_color))
-                    textShowColor = Color.WHITE
-                    showTextSize = titleFragment.getDimen(R.dimen.wt_main_text_size).toFloat()
+                    imageTintList =
+                        ColorStateList.valueOf(titleFragment.viewResConfig.titleItemIconColor)
+                    textShowColor = titleFragment.viewResConfig.titleItemTextColor
+                    //showTextSize = titleFragment.getDimen(R.dimen.wt_main_text_size).toFloat()
                     setPaddingHorizontal(6 * dpi)
                 }
                 return backItem
@@ -172,6 +191,8 @@ class App : PluginApplication() {
 
     override fun buildCacheInterceptor(): CacheInterceptor? {
         if (cacheInterceptor == null) {
+            OfflineCacheAdapter.IGNORE_URL_PATTERNS.add(".*Authentication.*")
+            OfflineCacheAdapter.IGNORE_URL_PATTERNS.add(".*oauth.*")
             cacheInterceptor = CacheInterceptor().apply {
                 registerCacheAdapter(OfflineCacheAdapter())
             }

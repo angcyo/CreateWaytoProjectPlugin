@@ -36,7 +36,9 @@ public class CreateProjectForm {
     private JRadioButton localRadio;
     private JRadioButton giteeRadio;
     private JPanel cardPanel;
-    private JLabel appInfoLabel;
+    private JCheckBox onlineTemplatesBox;
+    private JTextPane tempTextPane;
+    private JCheckBox overrideBox;
 
     private TextFieldWithBrowseButton selectorLocalPathButton;
     private TextFieldWithBrowseButton selectorCorePathButton;
@@ -76,7 +78,9 @@ public class CreateProjectForm {
         });
 
         localRadio.setSelected(config.getCorePluginFrom().equals("1"));
-        giteeRadio.setSelected(config.getCorePluginFrom().equals("2"));
+        giteeRadio.setSelected(!config.getCorePluginFrom().equals("1"));
+        onlineTemplatesBox.setSelected(config.getOnlineTemplates().equals("1"));
+        overrideBox.setSelected(config.getOverrideBox().equals("1"));
     }
 
     public void addBrowseButton() {
@@ -87,7 +91,7 @@ public class CreateProjectForm {
     }
 
     public void showAppInfo(String text) {
-        appInfoLabel.setText(text);
+        tempTextPane.setText(text);
     }
 
     public Config readConfig() {
@@ -106,11 +110,10 @@ public class CreateProjectForm {
         config.setUserName(giteeUserNameEdit.getText());
         config.setUserPassword(String.valueOf(giteePasswordEdit.getPassword()));
 
-        if (localRadio.isSelected()) {
-            config.setCorePluginFrom("1");
-        } else {
-            config.setCorePluginFrom("2");
-        }
+        config.setCorePluginFrom(localRadio.isSelected() ? "1" : "2");
+        config.setOnlineTemplates(onlineTemplatesBox.isSelected() ? "1" : "0");
+        config.setOverrideBox(overrideBox.isSelected() ? "1" : "0");
+
         return config;
     }
 

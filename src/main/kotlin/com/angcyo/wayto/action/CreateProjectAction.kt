@@ -1,5 +1,6 @@
 package com.angcyo.wayto.action
 
+import com.angcyo.wayto.GitHelper
 import com.angcyo.wayto.dialog.CreateProjectDialog
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
