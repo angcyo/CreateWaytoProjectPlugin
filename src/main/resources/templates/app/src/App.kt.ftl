@@ -2,6 +2,7 @@ package ${packageName}
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.SparseArray
 import android.view.View
@@ -15,6 +16,7 @@ import com.wayto.ui.base.BaseUI
 import com.wayto.ui.core.WaytoUI
 import com.wayto.ui.core.app
 import com.wayto.ui.kotlin.*
+import com.wayto.ui.manager.RNotifier
 import com.wayto.ui.offline.OfflineCacheAdapter
 import com.wayto.ui.utils.OnBackgroundObserver
 import com.wayto.ui.utils.RBackground
@@ -59,7 +61,7 @@ class App : PluginApplication() {
             override fun ignoreRequest(originRequest: Request): Boolean {
                 return /*UserModel.userJson == null *//*未登录的情况下, 忽略所有请求的token检查*//*
                         ||*/ !RNetwork.isConnect(app()) /*无网络*/
-                        || originRequest.url().toString().contains("Authentication")
+                        || originRequest.url.toString().contains("Authentication")
             }
 
             override fun isTokenInvalid(response: Response, bodyString: String): Boolean {
@@ -117,13 +119,26 @@ class App : PluginApplication() {
         super.onCreateOnce()
 
         BaseUI.uiFragment = object : WaytoUI.WTDefaultUIFragment() {
-            override fun initBaseTitleLayout(titleFragment: BaseTitleFragment, arguments: Bundle?) {
-                super.initBaseTitleLayout(titleFragment, arguments)
+
+            override fun initFragment(titleFragment: BaseTitleFragment) {
+                super.initFragment(titleFragment)
 
                 titleFragment.viewResConfig.titleTextSize =
                     getDimen(R.dimen.wt_title_text_size).toFloat()
                 titleFragment.viewResConfig.titleTextColor = getColor(R.color.wt_main_text_color)
                 titleFragment.viewResConfig.titleBarBackgroundColor = Color.WHITE
+                titleFragment.viewResConfig.fragmentBackgroundColor = getColor(R.color.wt_dark_bg2)
+                //titleFragment.viewResConfig.titleItemTextColor = getColor(R.color.back_item_color)
+                //titleFragment.viewResConfig.titleItemIconColor = getColor(R.color.back_item_color)
+
+                titleFragment.viewResConfig.titleBarBackgroundDrawable =
+                    ColorDrawable(titleFragment.viewResConfig.titleBarBackgroundColor)
+                titleFragment.viewResConfig.fragmentBackgroundDrawable =
+                    ColorDrawable(titleFragment.viewResConfig.fragmentBackgroundColor)
+            }
+
+            override fun initBaseTitleLayout(titleFragment: BaseTitleFragment, arguments: Bundle?) {
+                super.initBaseTitleLayout(titleFragment, arguments)
 
                 //标题栏 返回按钮
                 titleFragment.titleControl()
@@ -137,7 +152,7 @@ class App : PluginApplication() {
 //                            )
 //                            .get()
 //                    )
-                    .setBackgroundColor(titleFragment.viewResConfig.titleBarBackgroundColor)
+                    .setBackground(titleFragment.viewResConfig.titleBarBackgroundDrawable)
                     .selector(R.id.base_title_view)
                     .setTextBold(true)
                     .setTextSize(titleFragment.viewResConfig.titleTextSize)
@@ -151,16 +166,11 @@ class App : PluginApplication() {
 //                    titleFragment.getDimen(R.dimen.wt_line)
 //                )
                 //内容背景颜色
-                titleFragment.viewResConfig.fragmentBackgroundColor = getColor(R.color.wt_dark_bg2)
                 titleFragment.rootControl().selector()
-                    .setBackgroundColor(titleFragment.viewResConfig.fragmentBackgroundColor)
+                    .setBackground(titleFragment.viewResConfig.fragmentBackgroundDrawable)
             }
 
             override fun createBackItem(titleFragment: BaseTitleFragment): View {
-                titleFragment.viewResConfig.titleItemTextColor =
-                    getColor(R.color.wt_main_text_color)
-                titleFragment.viewResConfig.titleItemIconColor =
-                    getColor(R.color.wt_main_text_color)
                 val backItem: ImageTextView = super.createBackItem(titleFragment) as ImageTextView
                 backItem.apply {
                     setImageResource(R.drawable.ic_app_back)
@@ -182,6 +192,8 @@ class App : PluginApplication() {
                 }
             }
         })
+
+        RNotifier.instance().init(this)
     }
 
     /**

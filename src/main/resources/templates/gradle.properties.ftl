@@ -18,24 +18,21 @@ org.gradle.parallel=true
 android.enableR8=false
 android.enableD8=true
 
-key_file=key_file.properties
-
-kotlin_version=1.3.50
-
-replugin_version=2.3.3
-
-C_SDK=28
-M_SDK=21
-T_SDK=28
-
-S_VER=28.0.0
+android.useAndroidX=true
+android.enableJetifier=true
 
 # 开启混淆
 minify_enabled=true
 minify_enabled_debug=false
 
-#android.useAndroidX=false
-#android.enableJetifier=false
-#android.enableR8=false
+kotlin_version=1.3.50
+replugin_version=2.3.3
+objectboxVersion = 2.3.4
 
-objectboxVersion=2.3.4
+M_SDK=21
+T_SDK=29
+C_SDK=29
+
+key_file=key_file.properties
+
+

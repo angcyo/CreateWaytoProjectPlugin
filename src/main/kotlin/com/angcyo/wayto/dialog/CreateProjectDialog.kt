@@ -24,7 +24,7 @@ class CreateProjectDialog : DialogWrapper(null, true) {
 
     init {
         init()
-        title = "Wayto 创建工程配置页 V1.2.0"
+        title = "Wayto 创建工程配置页 V1.2.1"
     }
 
     override fun createCenterPanel(): JComponent? {

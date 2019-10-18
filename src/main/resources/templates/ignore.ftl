@@ -1,11 +1,12 @@
 Camera
 ex
-#map
+map
 mapbox
 mpchart
-#mqtt
+mqtt
 opencv
-#rcode
+rcode
 tbs
 tesstwo
 websocket
+agora

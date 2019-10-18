@@ -45,17 +45,27 @@ dependencies {
 //    implementation project(allModule.opencv)
 //    implementation project(allModule.ex)
 //    implementation project(allModule.mapbox)
-    implementation project(allModule.map)
-    implementation project(allModule.rcode)
-    implementation project(allModule.mqtt)
+//    implementation project(allModule.map)
+//    implementation project(allModule.rcode)
+//    implementation project(allModule.mqtt)
 //    implementation project(allModule.websocket)
-    implementation project(allModule.agora)
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+//    //高版本需要AndroidX的支持
+//    def lottieVersion = "3.1.0"
+//    api("com.airbnb.android:lottie:$lottieVersion") {
+//        exclude group: 'androidx.appcompat'
+//        exclude group: 'androidx.annotation'
+//    }
 }
 
 apply from: allGradle.plugin
 apply from: allGradle.v7a
 apply plugin: 'kotlin-kapt'
 apply plugin: 'io.objectbox'
+
+apply from: allGradle.makeDex
+apply from: allGradle.excludeDex

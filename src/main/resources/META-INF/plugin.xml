@@ -25,13 +25,24 @@
 
     <actions>
         <!-- Add your actions here -->
+        <!--欢迎页的入口-->
         <action id="angcyo.wayto.action.create.project"
                 class="com.angcyo.wayto.action.CreateProjectAction"
                 text="Start a new Wayto project"
                 icon="/icons/create.png"
                 description="Wayto工程创建">
-            <add-to-group group-id="WelcomeScreen.QuickStart.IDEA" anchor="after"
+            <add-to-group group-id="WelcomeScreen.QuickStart.IDEA"
+                          anchor="after"
                           relative-to-action="WelcomeScreen.CreateNewProject"/>
+        </action>
+        <!--菜单 File->New-> 入口-->
+        <action id="angcyo.wayto.action.create.project.menu"
+                class="com.angcyo.wayto.action.MenuCreateAction"
+                text="New Wayto Project..."
+                description="Wayto工程创建">
+            <add-to-group group-id="JavaNewProjectOrModuleGroup"
+                          anchor="after"
+                          relative-to-action="NewProject"/>
         </action>
     </actions>
 </idea-plugin>

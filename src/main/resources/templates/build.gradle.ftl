@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 apply from: './wayto.core/lib/find_module.gradle'
+apply from: allGradle.androidx
 apply from: allGradle.qiniu
 
 buildscript {
