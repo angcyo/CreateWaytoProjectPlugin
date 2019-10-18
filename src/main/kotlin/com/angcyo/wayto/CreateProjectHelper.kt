@@ -1,13 +1,14 @@
 package com.angcyo.wayto
 
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.progress.util.ProgressWindow
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.wm.IdeFocusManager
 import com.intellij.platform.PlatformProjectOpenProcessor
+import com.jetbrains.rd.util.EnumSet
 import org.gradle.internal.impldep.org.eclipse.jgit.util.FileUtils
 import java.io.File
-import java.util.*
 import javax.swing.SwingUtilities
 
 /**
@@ -110,9 +111,21 @@ object CreateProjectHelper {
 
         val baseDir = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(File(path))
         VfsUtil.markDirtyAndRefresh(false, true, true, baseDir)
-        val options = EnumSet.noneOf(PlatformProjectOpenProcessor.Option::class.java)
-        val project = PlatformProjectOpenProcessor.doOpenProject(baseDir!!, projectToClose, -1, null, options)
 
-        //L.info("打开project->${project.toString()}")
+        val options = EnumSet.noneOf(PlatformProjectOpenProcessor.Option::class.java)
+        options.add(PlatformProjectOpenProcessor.Option.REOPEN)
+        options.add(PlatformProjectOpenProcessor.Option.TEMP_PROJECT)
+        options.add(PlatformProjectOpenProcessor.Option.DO_NOT_USE_DEFAULT_PROJECT)
+
+        ApplicationManager.getApplication().invokeLater {
+            try {
+                val project = PlatformProjectOpenProcessor.doOpenProject(baseDir!!, projectToClose, -1, null, options)
+                //L.info("打开project->${project.toString()}")
+            } catch (e: Exception) {
+                //L.info("打开项目失败.")
+                e.printStackTrace()
+                e.message?.message("打开项目失败!")
+            }
+        }
     }
 }
