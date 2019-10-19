@@ -1,14 +1,9 @@
 package ${packageName}.fragment
 
-import android.os.Bundle
 import ${packageName}.BuildConfig
 import ${packageName}.R
-import com.wayto.ui.base.main.SaasLoginFragment
-import com.wayto.ui.core.app
+import com.wayto.ui.base.main.JavaLoginFragment
 import com.wayto.ui.core.only
-import com.wayto.ui.kotlin.dpi
-import com.wayto.ui.recycler.RBaseViewHolder
-import com.wayto.ui.widget.Button
 
 /**
  *
@@ -19,33 +14,19 @@ import com.wayto.ui.widget.Button
  */
 
 <#noparse>
-class LoginFragment : SaasLoginFragment() {
-    companion object {
-        val IS_LOGIN_SUCCESS = "${app().scheme}_IS_LOGIN_SUCCESS"
-    }
+class LoginFragment : JavaLoginFragment() {
 
     override fun getLogoLayout(): Int {
         return -1
     }
 
     override fun getVersionName(): String? {
-        return BuildConfig.VERSION_NAME
+        return "当前版本 v${BuildConfig.VERSION_NAME}"
     }
 
-    override fun login(name: String, password: String, company: String) {
+    override fun onLogin(name: String, password: String) {
+        super.onLogin(name, password)
         only(MainFragment())
-    }
-
-    override fun initBaseView(
-        viewHolder: RBaseViewHolder,
-        arguments: Bundle?,
-        savedInstanceState: Bundle?
-    ) {
-        super.initBaseView(viewHolder, arguments, savedInstanceState)
-
-        viewHolder.button(R.id.login_button).apply {
-            setButtonStyle(Button.ROUND_GRADIENT_RECT, 45 * dpi)
-        }
     }
 }
 </#noparse>
